@@ -1,0 +1,30 @@
+{
+  "canisters": {
+    "varion-app-backend": {
+      "build": "npx azle varion-app-backend",
+      "candid": "src/varion-app-backend/varion-app-backend.did",
+      "gzip": true,
+      "main": "src/varion-app-backend/src/index.ts",
+      "type": "custom",
+      "wasm": ".azle/varion-app-backend/varion-app-backend.wasm"
+    },
+    "varion-app-frontend": {
+      "dependencies": [
+        "varion-app-backend"
+      ],
+      "source": [
+        "src/varion-app-frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "varion-app-frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
