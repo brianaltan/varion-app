@@ -1,7 +1,10 @@
+// Header.tsx
+
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import logo from '../assets/icon/VarionLogoTitleWhite.png';
 import RalewayMedium from '../fonts/Raleway-Medium.ttf'; // Import font file
+import { login, logout, isAuthenticated } from './Identity';
 
 // Define global styles to apply the font
 const GlobalStyle = createGlobalStyle`
@@ -38,26 +41,25 @@ const HeaderContainer = styled.header<HeaderContainerProps>`
 `;
 
 const Logo = styled.img<HeaderContainerProps>`
-  width: 100px;
+  width: 150px;
   height: auto;
   margin-right: 10px;
   margin-left: 15px;
-  transition: background 0.3s ease; /* Add transition for background */
+  transition: background 0.3s ease;
   background: ${(props) => (props.scrollPosition && props.scrollPosition > 50 ? '#1a1a1a' : '#000')};
 `;
 
 const Nav = styled.nav<HeaderContainerProps>`
   display: flex;
   align-items: center;
-  transition: background 0.3s ease; /* Add transition for background */
+  transition: background 0.3s ease;
   background: ${(props) => (props.scrollPosition && props.scrollPosition > 50 ? '#1a1a1a' : '#000')};
-  
   a {
     background: ${(props) => (props.scrollPosition && props.scrollPosition > 50 ? '#1a1a1a' : '#000')};
     color: white;
     margin: 0 15px;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 16px;
 
     &:hover {
       text-decoration: underline;
@@ -66,14 +68,14 @@ const Nav = styled.nav<HeaderContainerProps>`
 `;
 
 const Button = styled.button<HeaderContainerProps>`
-  transition: background 0.3s ease; /* Add transition for background */
+  transition: background 0.3s ease;
   background: ${(props) => (props.scrollPosition && props.scrollPosition > 50 ? '#007bff' : '#007bff')};
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 16px;
   margin-right: 10px;
 
   &:hover {
@@ -81,8 +83,44 @@ const Button = styled.button<HeaderContainerProps>`
   }
 `;
 
+const ButtonLogin = styled.div<{ isAuthenticated: boolean; scrollPosition?: number }>`
+  background: ${(props) => (props.scrollPosition && props.scrollPosition > 50 ? '#1a1a1a' : '#000')};
+  button {
+    background: ${({ isAuthenticated }) => (isAuthenticated ? '#ff4444' : '#007bff')};
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    margin-right: 20px;
+    cursor: ${({ isAuthenticated }) => (isAuthenticated ? 'pointer' : 'default')};
+    font-size: 16px;
+    font-weight: bold;
+
+    &:hover {
+      background: ${({ isAuthenticated }) => (isAuthenticated ? '#ff4444' : '#0056b3')};
+    }
+  }
+`;
+
 const Header: React.FC = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [authStatus, setAuthStatus] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const authenticated = await isAuthenticated();
+      setAuthStatus(authenticated);
+    };
+    checkAuthStatus();
+  }, []);
+
+  const handleSignIn = async () => {
+    await login();
+  };
+
+  const handleSignOut = async () => {
+    await logout();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,14 +137,18 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <GlobalStyle /> {/* Apply global styles */}
+      <GlobalStyle />
       <HeaderContainer scrollPosition={scrollPosition}>
         <Logo src={logo} alt="VARION Logo" scrollPosition={scrollPosition} />
         <Nav scrollPosition={scrollPosition}>
-          <a href="#">Home</a>
-          <a href="#">Services</a>
-          <a href="#">Developers</a>
-          <Button scrollPosition={scrollPosition}>Get Started</Button>
+          <a href="/">Home</a>
+          <a href="demo">Services</a>
+          <a href="devs">Developers</a>
+          <ButtonLogin isAuthenticated={authStatus} scrollPosition={scrollPosition}>
+            <button onClick={authStatus ? handleSignOut : handleSignIn}>
+              {authStatus ? 'Sign Out' : 'Sign In'}
+            </button>
+          </ButtonLogin>
         </Nav>
       </HeaderContainer>
     </>

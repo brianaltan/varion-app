@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import backgroundImage from '../assets/background/backgroundVarion.jpg';
-import { login, isAuthenticated } from './identity';
+import { login, isAuthenticated } from './Identity';
+import { useNavigate } from 'react-router-dom'; // Import useHistory hook
 
 const MainSectionContainer = styled.section`
   text-align: center;
@@ -43,7 +44,7 @@ const ButtonContainer = styled.div`
 
 const ButtonLogin = styled.div<{ isAuthenticated: boolean }>`
   button {
-    background: ${({ isAuthenticated }) => (isAuthenticated ? '#28a745' : '#007bff')};
+    background: ${({ isAuthenticated }) => (isAuthenticated ? '#007bff' : '#007bff')};
     color: white;
     border: none;
     padding: 15px 25px;
@@ -52,9 +53,9 @@ const ButtonLogin = styled.div<{ isAuthenticated: boolean }>`
     cursor: ${({ isAuthenticated }) => (isAuthenticated ? 'default' : 'pointer')};
     font-size: 17px;
     font-weight: bold;
-    pointer-events: ${({ isAuthenticated }) => (isAuthenticated ? 'none' : 'auto')};
+    pointer-events: ${({ isAuthenticated }) => (isAuthenticated ? 'auto' : 'auto')};
     &:hover {
-      background: ${({ isAuthenticated }) => (isAuthenticated ? '#28a745' : '#0056b3')};
+      background: ${({ isAuthenticated }) => (isAuthenticated ? '#0056b3' : '#0056b3')};
     }
   }
 `;
@@ -78,6 +79,7 @@ const ButtonDemo = styled.div`
 
 const MainSection: React.FC = () => {
   const [authStatus, setAuthStatus] = useState<boolean>(false);
+  const history = useNavigate();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -91,6 +93,10 @@ const MainSection: React.FC = () => {
     await login();
   };
 
+  const handleServices = async () => {
+    history('/demo');
+  }
+
   return (
     <MainSectionContainer>
       <Title>Transforming forensic accounting with decentralized audits.<br/></Title>
@@ -100,13 +106,13 @@ const MainSection: React.FC = () => {
       </Subtitle>
       <ButtonContainer>
         <ButtonLogin isAuthenticated={authStatus}>
-          <button onClick={authStatus ? undefined : handleSignIn}>
-            {authStatus ? 'Signed In' : 'Sign In'}
+          <button onClick={authStatus ? handleServices : handleSignIn}>
+            {authStatus ? 'Get Started' : 'Get Started'}
           </button>
         </ButtonLogin>
-        <ButtonDemo>
+        {/*<ButtonDemo>
           <button>Demo</button>
-        </ButtonDemo>
+        </ButtonDemo>*/}
       </ButtonContainer>
     </MainSectionContainer>
   );
