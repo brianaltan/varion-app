@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import backgroundImage from '../assets/background/backgroundVarion.jpg';
 import { useDropzone } from 'react-dropzone';
 import { Endpoint } from '@dfinity/agent';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -117,7 +118,8 @@ const Services: React.FC<Props> = ({ authStatus }) => {
     const [fileUploaded, setFileUploaded] = useState<boolean>(false);
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [errorMessage, setErrorMessage] = useState<React.ReactNode | null>(null);
-  
+    const navigate = useNavigate();
+
     const onDrop = (acceptedFiles: File[]) => {
         if (acceptedFiles.length > 0) {
             setFileName(acceptedFiles[0].name);
@@ -185,11 +187,12 @@ const Services: React.FC<Props> = ({ authStatus }) => {
                             }
                             plainTextContent += nextLine.replace(/[\r\n]/g, '') + '\n';
                         }
-                        headers.push({ type: 'Plain Text', value: plainTextContent });
+                        headers.push({ type: 'Content', value: plainTextContent });
                     }
                 }
       
                 console.log(headers);
+                navigate('/dashboard');
             };
             reader.readAsText(uploadedFile);
         }

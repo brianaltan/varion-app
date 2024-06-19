@@ -1,10 +1,9 @@
-// Header.tsx
-
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import logo from '../assets/icon/VarionLogoTitleWhite.png';
 import RalewayMedium from '../fonts/Raleway-Medium.ttf'; // Import font file
 import { login, logout, isAuthenticated } from './Identity';
+import { useNavigate } from 'react-router-dom';
 
 // Define global styles to apply the font
 const GlobalStyle = createGlobalStyle`
@@ -60,6 +59,7 @@ const Nav = styled.nav<HeaderContainerProps>`
     margin: 0 15px;
     text-decoration: none;
     font-size: 16px;
+    cursor: pointer;
 
     &:hover {
       text-decoration: underline;
@@ -105,6 +105,7 @@ const ButtonLogin = styled.div<{ isAuthenticated: boolean; scrollPosition?: numb
 const Header: React.FC = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [authStatus, setAuthStatus] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -135,15 +136,21 @@ const Header: React.FC = () => {
     };
   }, []);
 
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setScrollPosition(0)
+  };
+
   return (
     <>
       <GlobalStyle />
       <HeaderContainer scrollPosition={scrollPosition}>
         <Logo src={logo} alt="VARION Logo" scrollPosition={scrollPosition} />
         <Nav scrollPosition={scrollPosition}>
-          <a href="/">Home</a>
-          <a href="demo">Services</a>
-          <a href="devs">Developers</a>
+          <a onClick={() => handleNavigation('/')}>Home</a>
+          <a onClick={() => handleNavigation('/demo')}>Services</a>
+          <a onClick={() => handleNavigation('/dashboard')}>Dashboard</a>
+          <a onClick={() => handleNavigation('/devs')}>Developers</a>
           <ButtonLogin isAuthenticated={authStatus} scrollPosition={scrollPosition}>
             <button onClick={authStatus ? handleSignOut : handleSignIn}>
               {authStatus ? 'Sign Out' : 'Sign In'}
