@@ -1,7 +1,7 @@
-import { Canister, query, text } from 'azle';
+import { Canister, update, text } from 'azle';
 
 export default Canister({
-    greet: query([text], text, (name) => {
-        return `Hello, ${name}!`;
+    getString: update([], text, () => {
+        return "This is an update method!!";
     })
-})
+});

@@ -60,7 +60,7 @@ const ButtonLogin = styled.div<{ isAuthenticated: boolean }>`
   }
 `;
 
-const ButtonDemo = styled.div`
+const ButtonDashboard = styled.div`
   button {
     background: #ffffff;
     color: black;
@@ -97,9 +97,13 @@ const MainSection: React.FC = () => {
     history('/demo');
   }
 
+  const handleDB = async () => {
+    history('/dashboard');
+  }
+
   return (
     <MainSectionContainer>
-      <Title>Transforming forensic accounting with decentralized audits.<br/></Title>
+      <Title>Revolutionizing Email Security through Decentralized Audits<br/></Title>
       <Subtitle>
         The next-gen solution fueled by<br/>
         <HighlightedText>on-chain ML</HighlightedText> and <HighlightedText>zero-knowledge</HighlightedText> proofs.
@@ -110,9 +114,9 @@ const MainSection: React.FC = () => {
             {authStatus ? 'Get Started' : 'Get Started'}
           </button>
         </ButtonLogin>
-        {/*<ButtonDemo>
-          <button>Demo</button>
-        </ButtonDemo>*/}
+        <ButtonDashboard>
+          <button onClick={handleDB}>Dashboard</button>
+        </ButtonDashboard>
       </ButtonContainer>
     </MainSectionContainer>
   );

@@ -22,6 +22,8 @@ const Title = styled.h1`
 `;
 
 const Message = styled.p`
+    margin-top: 10px;
+    font-size: 20px;
     color: white;
     text-align: center;
     background: transparent;

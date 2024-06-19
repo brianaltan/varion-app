@@ -99494,14 +99494,14 @@ function reportFinalInstructions() {
         console.log(`final instructions: ${ic.instructionCounter()}`);
     }
 }
-// node_modules/azle/src/lib/canister_methods/methods/query.ts
-function query(paramCandidTypes, returnCandidType, callback, methodArgs) {
+// node_modules/azle/src/lib/canister_methods/methods/update.ts
+function update(paramCandidTypes, returnCandidType, callback, methodArgs) {
     const finalCallback = callback === void 0 ? void 0 : (...args)=>{
         var _methodArgs_manual;
-        executeMethod("query", args, callback, paramCandidTypes, returnCandidType, (_methodArgs_manual = methodArgs == null ? void 0 : methodArgs.manual) != null ? _methodArgs_manual : false);
+        executeMethod("update", args, callback, paramCandidTypes, returnCandidType, (_methodArgs_manual = methodArgs == null ? void 0 : methodArgs.manual) != null ? _methodArgs_manual : false);
     };
     return {
-        mode: "query",
+        mode: "update",
         callback: finalCallback,
         paramCandidTypes,
         returnCandidType,
@@ -99978,10 +99978,8 @@ var Principal4 = class _Principal {
 };
 // src/varion-app-backend/src/index.ts
 var src_default = Canister({
-    greet: query([
-        text
-    ], text, (name)=>{
-        return `Hello, ${name}!`;
+    getString: update([], text, ()=>{
+        return "This is an update method!!";
     })
 });
 // <stdin>

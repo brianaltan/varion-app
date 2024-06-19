@@ -86,12 +86,12 @@ const About: React.FC = () => (
   <Wrapper>
     <AboutContainer>
       <Title>About <HighlightedText>VARION</HighlightedText></Title>
-      <Description>Upload, manage, and analyze financial transactions effortlessly with just a few clicks!</Description>
+      <Description>Upload, manage, and analyze potential scam emails effortlessly with just a few clicks!</Description>
       <Features>
         <Feature>
-          <Icon src={analyzeIcon} alt="Forensic Accounting" />
-          <h3>Forensic Accounting</h3>
-          <p>Using machine learning to detect anomalies and<br />potential fraud in financial transactions.</p>
+          <Icon src={analyzeIcon} alt="Email Audits" />
+          <h3>Email Audits</h3>
+          <p>Using machine learning to detect anomalies and<br />potential phishing in daily emails.</p>
         </Feature>
         <Feature>
           <Icon src={checkmarkIcon} alt="Zero-knowledge Proofs" />

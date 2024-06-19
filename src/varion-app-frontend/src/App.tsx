@@ -10,6 +10,7 @@ import Services from './components/Services';
 import Lost from './components/Lost'; // Import your Lost component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { isAuthenticated } from './components/Identity'; // Import your authentication function
+import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
   const [authStatus, setAuthStatus] = useState<boolean>(false);
@@ -29,6 +30,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/demo" element={<Services authStatus={authStatus} />} />
+        <Route path="/dashboard" element={<Dashboard authStatus={authStatus} />} />
         <Route path="/devs" element={<Dev />} />
         {/* This route will catch all other paths */}
         <Route path="*" element={<Lost />} />
