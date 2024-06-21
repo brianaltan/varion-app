@@ -6,6 +6,9 @@ import { useDropzone } from 'react-dropzone';
 import { Endpoint } from '@dfinity/agent';
 import { useNavigate } from 'react-router-dom';
 
+import { SyncRedactor } from 'redact-pii';
+const redactor = new SyncRedactor();
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -187,7 +190,8 @@ const Services: React.FC<Props> = ({ authStatus }) => {
                             }
                             plainTextContent += nextLine.replace(/[\r\n]/g, '') + '\n';
                         }
-                        headers.push({ type: 'Content', value: plainTextContent });
+                        let piiFilteredContent = redactor.redact(plainTextContent);
+                        headers.push({ type: 'Content', value: piiFilteredContent });
                     }
                 }
       

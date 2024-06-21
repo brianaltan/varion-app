@@ -25,6 +25,7 @@
     "eml-parser": "^2.0.3",
     "react-dropzone": "^14.2.3",
     "react-router-dom": "^6.23.1",
+    "redact-pii": "^3.4.0",
     "reflect-metadata": "^0.2.2",
     "styled-components": "^6.1.11"
   },
