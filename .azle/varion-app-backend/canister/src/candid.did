@@ -1,3 +1,4 @@
 service: () -> {
     getString: () -> (text);
+    storeHeaders: (text) -> (text);
 }

@@ -1,11 +1,8 @@
-// MainSection.tsx
-
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import backgroundImage from '../assets/background/backgroundVarion.jpg';
 import { login, isAuthenticated } from './Identity';
 import { useNavigate } from 'react-router-dom'; // Import useHistory hook
-import { isWalletConnected } from './Wallet'; // Import the function
 
 const MainSectionContainer = styled.section`
   text-align: center;
@@ -87,8 +84,7 @@ const MainSection: React.FC = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       const authenticated = await isAuthenticated();
-      const walletConnected = await isWalletConnected();
-      setAuthStatus(walletConnected);
+      setAuthStatus(authenticated);
     };
     checkAuthStatus();
   }, []);
@@ -99,11 +95,11 @@ const MainSection: React.FC = () => {
 
   const handleServices = async () => {
     history('/demo');
-  };
+  }
 
   const handleDB = async () => {
     history('/dashboard');
-  };
+  }
 
   return (
     <MainSectionContainer>

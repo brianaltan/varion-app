@@ -1,1 +1,1 @@
-{"canister_methods":{"queries":[],"updates":[{"name":"getString"}],"callbacks":{}}}
+{"canister_methods":{"queries":[],"updates":[{"name":"getString"},{"name":"storeHeaders"}],"callbacks":{}}}
